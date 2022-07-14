@@ -1,5 +1,16 @@
 // Repository
-const Post = require('../models/Post');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+
+const postSchema = new Schema({
+  title: { type: String, required: true },
+  body: { type: String, required: true },
+  name: { type: String, required: true },
+  username: { type: String, required: true },
+  date: { type: Date, default: Date.now },
+});
+
+const Post = mongoose.model('Post', postSchema);
 
 async function getAllPosts() {
   return Post.find();
