@@ -2,6 +2,7 @@ const express = require('express');
 const postController = require('../controller/posts');
 const { body } = require('express-validator');
 const validate = require('../middleware/validate');
+const isAuth = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -28,12 +29,12 @@ router.get('/', postController.getPosts);
 router.get('/:id', postController.getPost);
 
 // POST /posts
-router.post('/', validatePost, postController.createPost);
+router.post('/', isAuth, validatePost, postController.createPost);
 
 // PUT /posts/:id
-router.put('/:id', validatePost, postController.updatePost);
+router.put('/:id', isAuth, validatePost, postController.updatePost);
 
 // DELETE /posts/:id
-router.delete('/:id', postController.deletePost);
+router.delete('/:id', isAuth, postController.deletePost);
 
 module.exports = router;

@@ -24,8 +24,8 @@ async function getPost(req, res, next) {
 }
 
 async function createPost(req, res, next) {
-  const { title, body, name, username } = req.body;
-  const post = await postRepository.createPost(title, body, name, username);
+  const { title, body } = req.body;
+  const post = await postRepository.createPost(title, body, req.userId);
   return res.status(201).send(post);
 }
 
@@ -52,7 +52,7 @@ async function deletePost(req, res, next) {
 
   const post = await postRepository.deletePost(id);
   if (post) {
-    return res.status(204);
+    return res.status(204).send(id);
   } else {
     return res.status(404).send({ message: `Post not found: ${id}` });
   }
